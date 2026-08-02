@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://b3c385yqjulrv"]
+
+[ext_resource type="PackedScene" uid="uid://k0jtk1s2vgkk" path="res://arena_2_root.tscn" id="1_7gsfu"]
+[ext_resource type="PackedScene" uid="uid://bprthdp7xohr8" path="res://Placeholder_Player_Mech.tscn" id="2_6u5ra"]
+[ext_resource type="PackedScene" uid="uid://cip3cy2t5ckj8" path="res://damage_registration_module.tscn" id="3_grf0i"]
+
+[node name="level 2 root" type="Node3D" unique_id=2023207512]
+
+[node name="arena_2_root" parent="." unique_id=1861480811 instance=ExtResource("1_7gsfu")]
+
+[node name="mech_root" parent="." unique_id=1662884542 instance=ExtResource("2_6u5ra")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.0631642, -186.29239)
+
+[node name="damage_registration_module_root" parent="." unique_id=1554122326 instance=ExtResource("3_grf0i")]

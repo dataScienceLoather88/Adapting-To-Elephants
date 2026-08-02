@@ -5,7 +5,10 @@
 #include <godot_cpp/core/defs.hpp>
 #include <godot_cpp/godot.hpp>
 
-#include "example_class.h"
+#include "mech_movement.h"
+#include "light_weapon.h"
+#include "projectile_manager.h"
+#include "damage_registration_module.h"
 
 using namespace godot;
 
@@ -14,7 +17,10 @@ void initialize_gdextension_types(ModuleInitializationLevel p_level)
 	if (p_level != MODULE_INITIALIZATION_LEVEL_SCENE) {
 		return;
 	}
-	GDREGISTER_CLASS(ExampleClass);
+	GDREGISTER_CLASS(Mech_Movement);
+	GDREGISTER_CLASS(light_weapon);
+	GDREGISTER_CLASS(projectile_manager);
+	GDREGISTER_CLASS(damage_registration_module);
 }
 
 void uninitialize_gdextension_types(ModuleInitializationLevel p_level) {
@@ -26,7 +32,7 @@ void uninitialize_gdextension_types(ModuleInitializationLevel p_level) {
 extern "C"
 {
 	// Initialization
-	GDExtensionBool GDE_EXPORT example_library_init(GDExtensionInterfaceGetProcAddress p_get_proc_address, GDExtensionClassLibraryPtr p_library, GDExtensionInitialization *r_initialization)
+	GDExtensionBool GDE_EXPORT elephantry_init(GDExtensionInterfaceGetProcAddress p_get_proc_address, GDExtensionClassLibraryPtr p_library, GDExtensionInitialization *r_initialization)
 	{
 		GDExtensionBinding::InitObject init_obj(p_get_proc_address, p_library, r_initialization);
 		init_obj.register_initializer(initialize_gdextension_types);

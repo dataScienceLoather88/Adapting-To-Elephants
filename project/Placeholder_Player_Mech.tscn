@@ -1,0 +1,36 @@
+[gd_scene format=3 uid="uid://bprthdp7xohr8"]
+
+[ext_resource type="PackedScene" uid="uid://cutwi0xxiwj3w" path="res://Assets/Mechs/placeholder_mech.glb" id="1_diwd3"]
+[ext_resource type="PackedScene" uid="uid://b582ctmwoubjj" path="res://light_weapon.tscn" id="2_ihewi"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_xtas6"]
+height = 2.498169
+radius = 1.5737305
+
+[node name="mech_root" type="Mech_Movement" unique_id=1660284647]
+collision_layer = 2
+
+[node name="mech_model" parent="." unique_id=254954826 instance=ExtResource("1_diwd3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.008490324, -2.3841858e-07, 0.002418518)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1517511864]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.01578167, 1.1859202, 0.14744556)
+shape = SubResource("CylinderShape3D_xtas6")
+
+[node name="camera_pivot" type="Node3D" parent="." unique_id=604200308]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4526694, 0)
+
+[node name="SpringArm3D" type="SpringArm3D" parent="camera_pivot" unique_id=291964838]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
+spring_length = 4.0
+
+[node name="Camera3D" type="Camera3D" parent="camera_pivot/SpringArm3D" unique_id=2069176802]
+transform = Transform3D(1, 0, 0, 0, 0.9876883, 0.15643446, 0, -0.15643446, 0.9876883, -3.7433063e-07, 0, 4.281843)
+keep_aspect = 0
+current = true
+fov = 100.0
+
+[node name="light_weapon_root" parent="." unique_id=1613773770 instance=ExtResource("2_ihewi")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.42435497, -0.6001862, 0.13535616)
+
+[editable path="mech_model"]

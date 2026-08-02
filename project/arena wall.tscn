@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://s7pyfw1otcbj"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_xtas6"]
+size = Vector3(300, 1, 300)
+
+[sub_resource type="BoxMesh" id="BoxMesh_nxfp5"]
+size = Vector3(300, 1, 300)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7xp4f"]
+
+[node name="floor" type="StaticBody3D" unique_id=1788645322]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1961835366]
+shape = SubResource("BoxShape3D_xtas6")
+debug_color = Color(0, 0.6, 0.69803923, 0.41960785)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1128983271]
+mesh = SubResource("BoxMesh_nxfp5")
+surface_material_override/0 = SubResource("StandardMaterial3D_7xp4f")
