@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://b582ctmwoubjj"]
+
+[ext_resource type="PackedScene" uid="uid://c1jkudfbpbspp" path="res://projectile_manager.tscn" id="1_owejp"]
+
+[node name="light_weapon_root" type="light_weapon" unique_id=1613773770]
+
+[node name="projectile_manager_root" parent="." unique_id=320907785 instance=ExtResource("1_owejp")]

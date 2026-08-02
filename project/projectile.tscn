@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://cj17rtw86jptv"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_nxfp5"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_nxfp5"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xtas6"]
+albedo_color = Color(1, 0, 1, 1)
+
+[node name="projectile_root" type="CharacterBody3D" unique_id=1834492359]
+collision_layer = 4
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1465922675]
+shape = SubResource("SphereShape3D_nxfp5")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=88610097]
+mesh = SubResource("SphereMesh_nxfp5")
+surface_material_override/0 = SubResource("StandardMaterial3D_xtas6")

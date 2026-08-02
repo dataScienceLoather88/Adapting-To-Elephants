@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://dxak20i5pp108"]
+
+[ext_resource type="PackedScene" uid="uid://dhpx63w3gg3nv" path="res://placeholder_arena.tscn" id="1_vonw3"]
+[ext_resource type="PackedScene" uid="uid://bprthdp7xohr8" path="res://Placeholder_Player_Mech.tscn" id="2_oi3di"]
+
+[node name="level_root" type="Node3D" unique_id=1805587796]
+
+[node name="arena_root" parent="." unique_id=1960099150 instance=ExtResource("1_vonw3")]
+
+[node name="mech_root" parent="." unique_id=1662884542 instance=ExtResource("2_oi3di")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.56316423, 0)

@@ -1,0 +1,77 @@
+[gd_scene format=3 uid="uid://dhpx63w3gg3nv"]
+
+[ext_resource type="PackedScene" uid="uid://s7pyfw1otcbj" path="res://arena wall.tscn" id="1_jle48"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jle48"]
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ihj7y"]
+albedo_color = Color(0.49803922, 0.49803922, 0.49803922, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_sp3da"]
+albedo_color = Color(0.49803922, 0.49803922, 0.49803922, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ookwq"]
+albedo_color = Color(0.7607843, 0.7607843, 0.7607843, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_q623x"]
+albedo_color = Color(0.7607843, 0.7607843, 0.7607843, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_it624"]
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="Environment" id="Environment_nxfp5"]
+ssao_enabled = true
+adjustment_enabled = true
+
+[node name="arena_root" type="Node3D" unique_id=1960099150]
+
+[node name="floor" parent="." unique_id=1788645322 instance=ExtResource("1_jle48")]
+
+[node name="MeshInstance3D" parent="floor" index="1" unique_id=1128983271]
+surface_material_override/0 = SubResource("StandardMaterial3D_jle48")
+
+[node name="wall +Z" parent="." unique_id=1069522082 instance=ExtResource("1_jle48")]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 150, 150)
+
+[node name="MeshInstance3D" parent="wall +Z" index="1" unique_id=1128983271]
+surface_material_override/0 = SubResource("StandardMaterial3D_ihj7y")
+
+[node name="wall -Z" parent="." unique_id=2128737677 instance=ExtResource("1_jle48")]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 150, -150)
+
+[node name="MeshInstance3D" parent="wall -Z" index="1" unique_id=1128983271]
+surface_material_override/0 = SubResource("StandardMaterial3D_sp3da")
+
+[node name="wall +X" parent="." unique_id=1836997362 instance=ExtResource("1_jle48")]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 150, 150, 0)
+
+[node name="MeshInstance3D" parent="wall +X" index="1" unique_id=1128983271]
+surface_material_override/0 = SubResource("StandardMaterial3D_ookwq")
+
+[node name="wall -X" parent="." unique_id=207452267 instance=ExtResource("1_jle48")]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, -150, 150, 0)
+
+[node name="MeshInstance3D" parent="wall -X" index="1" unique_id=1128983271]
+surface_material_override/0 = SubResource("StandardMaterial3D_q623x")
+
+[node name="roof" parent="." unique_id=20699053 instance=ExtResource("1_jle48")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 300, 0)
+
+[node name="MeshInstance3D" parent="roof" index="1" unique_id=1128983271]
+surface_material_override/0 = SubResource("StandardMaterial3D_it624")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="." unique_id=2028108021]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 150, 0)
+light_energy = 16.0
+omni_range = 150.0
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1768572836]
+environment = SubResource("Environment_nxfp5")
+
+[editable path="floor"]
+[editable path="wall +Z"]
+[editable path="wall -Z"]
+[editable path="wall +X"]
+[editable path="wall -X"]
+[editable path="roof"]
