@@ -53,6 +53,20 @@ private:
     float jump_incr_z = 0.0f;
     //resistance changes end
 
+    //input state boolean variables
+    bool look_up = false;
+    bool look_down = false;
+    bool lock_horizontal_rotation = false;
+    bool rotate_mech_right = false;
+    bool rotate_mech_left = false;
+    bool move_mech_forward = false;
+    bool move_mech_back = false;
+    bool move_mech_right = false;
+    bool move_mech_left = false;
+    bool activate_thrust = false;
+    bool fire_light_weapon = false;
+
+
 protected:
     static void _bind_methods();
 
@@ -62,4 +76,17 @@ public:
     void _process(double delta) override; 
     void _physics_process(double delta) override;   
     void _ready() override;
+
+    void activate_look_up();
+    void activate_look_down();
+    void activate_lock_horizontal_rotation();
+    void activate_rotate_mech_right();
+    void activate_rotate_mech_left();
+    void activate_move_mech_forward();
+    void activate_move_mech_back();
+    void activate_move_mech_right();
+    void activate_move_mech_left();
+    void activate_activate_thrust();
+    void activate_fire_light_weapon();
+
 };
