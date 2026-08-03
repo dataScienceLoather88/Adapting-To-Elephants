@@ -14,7 +14,7 @@ void damage_registration_module::_bind_methods(){
 }
 
 void damage_registration_module::_ready(){
-    godot::Node *projectile_manager_player_ptr = get_node<godot::Node>("../mech_root/light_weapon_root/projectile_manager_root");
+    godot::Node *projectile_manager_player_ptr = get_node<godot::Node>("../player_interface_root/mech_root/light_weapon_root/projectile_manager_root");
     if(projectile_manager_player_ptr){
         godot::UtilityFunctions::print("projectile_manager loaded in damage registration class");
         projectile_manager_player_ptr->connect("bullet_collision", godot::Callable(this, "detect_entity_and_update_state"));

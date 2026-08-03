@@ -2,8 +2,6 @@
 #include "mech_movement.h"
 #include "light_weapon.h"
 
-#include <godot_cpp/classes/input.hpp>
-
 #include <godot_cpp/variant/utility_functions.hpp>
 #include <godot_cpp/core/class_db.hpp>
 #include <godot_cpp/core/method_bind.hpp>
@@ -29,11 +27,9 @@ void Mech_Movement::_physics_process(double delta){
     double saddle_vertical_rotation_direction;
     godot::Vector3 velocity_vector = this->get_velocity();
 
-    godot::Input *input = godot::Input::get_singleton(); 
-
     //input and execution for vertical rotation
-    if(input->is_action_pressed("look_up")){saddle_vertical_rotation_direction = 1.0f;}
-    else if(input->is_action_pressed("look_down")){saddle_vertical_rotation_direction = -1.0f;}
+    if(this->look_up){saddle_vertical_rotation_direction = 1.0f; this->look_up = false;}
+    else if(this->look_down){saddle_vertical_rotation_direction = -1.0f; this->look_down = false;}
     else {saddle_vertical_rotation_direction = 0.0f;}
 
     double saddle_vertical_rotation_rate_rad = godot::Math::deg_to_rad(this->saddle_vertical_rotation_degrees_per_second);
@@ -59,9 +55,9 @@ void Mech_Movement::_physics_process(double delta){
     this->camera_pivot_ptr->set_transform(camera_vertical_transform); 
 
     //input and execution for horizontal rotation 
-    if(input->is_action_just_pressed("lock_horizontal_rotation")){this->horizontal_lock = !this->horizontal_lock;}
-    if(input->is_action_pressed("rotate_mech_right")){saddle_horizontal_rotation_direction = -1.0f;}
-    else if(input->is_action_pressed("rotate_mech_left")){saddle_horizontal_rotation_direction = 1.0f;}
+    if(this->lock_horizontal_rotation){this->horizontal_lock = !this->horizontal_lock; this->lock_horizontal_rotation = false;}
+    if(this->rotate_mech_right){saddle_horizontal_rotation_direction = -1.0f; this->rotate_mech_right = false;}
+    else if(this->rotate_mech_left){saddle_horizontal_rotation_direction = 1.0f; this->rotate_mech_left = false;}
     else {saddle_horizontal_rotation_direction = 0.0f;}
 
     double saddle_horizontal_rotation_rate_rad = godot::Math::deg_to_rad(this->saddle_horizontal_rotation_degrees_per_second);
@@ -103,18 +99,19 @@ void Mech_Movement::_physics_process(double delta){
     }
 
     //input for movement 
-    if(input->is_action_pressed("move_mech_forward")){this->direction_vector.z = 1.0f;}
-    else if(input->is_action_pressed("move_mech_back")){this->direction_vector.z = -1.0f;}
+    if(this->move_mech_forward){this->direction_vector.z = 1.0f; this->move_mech_forward = false;}
+    else if(this->move_mech_back){this->direction_vector.z = -1.0f; this->move_mech_back = false;}
     else {this->direction_vector.z = 0.0f;}
 
-    if(input->is_action_pressed("move_mech_right")){this->direction_vector.x = -1.0f;}
-    else if(input->is_action_pressed("move_mech_left")){this->direction_vector.x = 1.0f;}
+    if(this->move_mech_right){this->direction_vector.x = -1.0f; this->move_mech_right = false;}
+    else if(this->move_mech_left){this->direction_vector.x = 1.0f; this->move_mech_left = false;}
     else {this->direction_vector.x = 0.0f;}
 
-    if(input->is_action_pressed("activate_thrust")){
+    if(this->activate_thrust){
         if(velocity_vector.y < this->booster_limit){
             velocity_vector.y += (this->vertical_acceleration * delta);
         }
+        this->activate_thrust = false;
     }
     else if (!this->is_on_floor()){ //is_on_floor() returns true on collision. SHould work cause negative y vector will be <0 if the mech collided with the floor
         if(velocity_vector.y > this->terminal_velocity){velocity_vector.y -= (this->gravity * delta);}
@@ -237,12 +234,13 @@ void Mech_Movement::_physics_process(double delta){
     //resistance changes end 1
 
     //firing input handling                     
-    if(input->is_action_pressed("fire_light_weapon")){
+    if(this->fire_light_weapon){
         this->light_weapon_ptr->fire_request(this->camera_pivot_ptr->get_global_transform());
+        this->fire_light_weapon = false;
     }
 }
 
-void  Mech_Movement::_ready(){
+void Mech_Movement::_ready(){
     this->saddle_ptr = this->get_node<godot::Node3D>("mech_model/waist/Saddle"); //possible hardcode, change later
     this->camera_pivot_ptr = this->get_node<godot::Node3D>("camera_pivot");
     this->spring_arm_ptr = this->get_node<godot::SpringArm3D>("camera_pivot/SpringArm3D");
@@ -286,3 +284,16 @@ void  Mech_Movement::_ready(){
         godot::UtilityFunctions::print("can not move light weapon to right forearm");
     }
 }
+
+//input state activation functions
+void Mech_Movement::activate_look_up() {this->look_up = true;}
+void Mech_Movement::activate_look_down() {this->look_down = true;}
+void Mech_Movement::activate_lock_horizontal_rotation() {this->lock_horizontal_rotation = true;}
+void Mech_Movement::activate_rotate_mech_right() {this->rotate_mech_right = true;}
+void Mech_Movement::activate_rotate_mech_left() {this->rotate_mech_left = true;}
+void Mech_Movement::activate_move_mech_forward() {this->move_mech_forward = true;}
+void Mech_Movement::activate_move_mech_back() {this->move_mech_back = true;}
+void Mech_Movement::activate_move_mech_right() {this->move_mech_right = true;}
+void Mech_Movement::activate_move_mech_left() {this->move_mech_left = true;}
+void Mech_Movement::activate_activate_thrust() {this->activate_thrust = true;}
+void Mech_Movement::activate_fire_light_weapon() {this->fire_light_weapon = true;}

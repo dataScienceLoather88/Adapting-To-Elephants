@@ -9,6 +9,7 @@
 #include "light_weapon.h"
 #include "projectile_manager.h"
 #include "damage_registration_module.h"
+#include "player_interface.h"
 
 using namespace godot;
 
@@ -21,6 +22,7 @@ void initialize_gdextension_types(ModuleInitializationLevel p_level)
 	GDREGISTER_CLASS(light_weapon);
 	GDREGISTER_CLASS(projectile_manager);
 	GDREGISTER_CLASS(damage_registration_module);
+	GDREGISTER_CLASS(player_interface);
 }
 
 void uninitialize_gdextension_types(ModuleInitializationLevel p_level) {
