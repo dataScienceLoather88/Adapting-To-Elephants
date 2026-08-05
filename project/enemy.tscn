@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://rij7fo7yxs7w"]
+
+[ext_resource type="PackedScene" uid="uid://bprthdp7xohr8" path="res://Placeholder_Player_Mech.tscn" id="1_7k104"]
+
+[node name="enemy_interface_root" type="enemy_interface" unique_id=502255264]
+
+[node name="mech_root" parent="." unique_id=1660284647 instance=ExtResource("1_7k104")]
