@@ -3,6 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://k0jtk1s2vgkk" path="res://arena_2_root.tscn" id="1_7gsfu"]
 [ext_resource type="PackedScene" uid="uid://bwfx7fd23et6q" path="res://player.tscn" id="1_grf0i"]
 [ext_resource type="PackedScene" uid="uid://cip3cy2t5ckj8" path="res://damage_registration_module.tscn" id="3_grf0i"]
+[ext_resource type="PackedScene" uid="uid://rij7fo7yxs7w" path="res://enemy.tscn" id="4_y3u0g"]
 
 [node name="level 2 root" type="Node3D" unique_id=2023207512]
 
@@ -12,3 +13,6 @@
 
 [node name="player_interface_root" parent="." unique_id=66165280 instance=ExtResource("1_grf0i")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.0631638, -180.02022)
+
+[node name="enemy_interface_root" parent="." unique_id=502255264 instance=ExtResource("4_y3u0g")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.0631638, 193.64844)
