@@ -11,6 +11,7 @@
 #include "damage_registration_module.h"
 #include "player_interface.h"
 #include "enemy_interface.h"
+#include "level_manager.h"
 
 using namespace godot;
 
@@ -25,6 +26,7 @@ void initialize_gdextension_types(ModuleInitializationLevel p_level)
 	GDREGISTER_CLASS(damage_registration_module);
 	GDREGISTER_CLASS(player_interface);
 	GDREGISTER_CLASS(enemy_interface);
+	GDREGISTER_CLASS(level_manager);
 }
 
 void uninitialize_gdextension_types(ModuleInitializationLevel p_level) {

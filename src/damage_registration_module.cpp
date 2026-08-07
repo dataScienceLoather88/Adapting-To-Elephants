@@ -5,6 +5,8 @@
 #include <godot_cpp/core/method_bind.hpp>
 #include <godot_cpp/classes/engine.hpp>
 
+class projectile_manager;
+
 damage_registration_module::damage_registration_module(){}
 
 damage_registration_module::~damage_registration_module(){}
@@ -14,14 +16,7 @@ void damage_registration_module::_bind_methods(){
 }
 
 void damage_registration_module::_ready(){
-    godot::Node *projectile_manager_player_ptr = get_node<godot::Node>("../player_interface_root/mech_root/light_weapon_root/projectile_manager_root");
-    if(projectile_manager_player_ptr){
-        godot::UtilityFunctions::print("projectile_manager loaded in damage registration class");
-        projectile_manager_player_ptr->connect("bullet_collision", godot::Callable(this, "detect_entity_and_update_state"));
-    }
-    else{
-        godot::UtilityFunctions::print("projectile_manager NOT loaded in damage registration class");
-    }
+    
 }
 
 void damage_registration_module::_process(double delta){}
@@ -30,4 +25,39 @@ void damage_registration_module::_physics_process(double delta){}
 
 void damage_registration_module::detect_entity_and_update_state(uint64_t collider_object_id){
     godot::UtilityFunctions::print(collider_object_id);
+}
+
+void damage_registration_module::receive_player_and_enemy_ptrs(godot::TypedArray<godot::Node> player_ptr_array, godot::TypedArray<godot::Node> enemy_ptr_array){
+    this->player_ptr_array = player_ptr_array;
+    this->enemy_ptr_array = enemy_ptr_array;
+
+    for(int i = 0; i < this->player_ptr_array.size(); i++){
+        godot::Node *player_ptr = godot::Object::cast_to<godot::Node>(this->player_ptr_array[i]);
+        if(!player_ptr)
+            continue;
+        godot::TypedArray<godot::Node> projectile_manager_returns =  player_ptr->find_children("*", "projectile_manager", true);
+
+        for(int j = 0; j < projectile_manager_returns.size(); j++){
+            godot::Node *projectile_manager_player_ptr = godot::Object::cast_to<godot::Node>(projectile_manager_returns[j]);
+            if(projectile_manager_player_ptr){
+                projectile_manager_player_ptr->connect("bullet_collision", godot::Callable(this, "detect_entity_and_update_state"));
+            }
+        }
+        
+    }
+
+    for(int i = 0; i < this->enemy_ptr_array.size(); i++){
+        godot::Node *enemy_ptr = godot::Object::cast_to<godot::Node>(this->enemy_ptr_array[i]);
+        if(!enemy_ptr)
+            continue;
+        godot::TypedArray<godot::Node> projectile_manager_returns =  enemy_ptr->find_children("*", "projectile_manager", true);
+
+        for(int j = 0; j < projectile_manager_returns.size(); j++){
+            godot::Node *projectile_manager_enemy_ptr = godot::Object::cast_to<godot::Node>(projectile_manager_returns[j]);
+            if(projectile_manager_enemy_ptr){
+                projectile_manager_enemy_ptr->connect("bullet_collision", godot::Callable(this, "detect_entity_and_update_state"));
+            }
+        }
+
+    }
 }
