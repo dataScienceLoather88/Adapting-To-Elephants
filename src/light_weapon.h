@@ -23,6 +23,7 @@ public:
     light_weapon();
     ~light_weapon();
     void fire_request(godot::Transform3D camera_global_transform);
+    void pass_down_projectile_mask_and_layer(uint32_t layer, uint32_t mask);
 
     void _process(double delta) override; 
     void _physics_process(double delta) override;   

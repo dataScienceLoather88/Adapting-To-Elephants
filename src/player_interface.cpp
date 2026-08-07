@@ -1,5 +1,6 @@
 #include "player_interface.h"
 #include "mech_movement.h"
+#include "collision_layers_and_masks.h"
 
 #include <godot_cpp/classes/input.hpp>
 
@@ -37,8 +38,17 @@ void player_interface::_physics_process(double delta){
 void player_interface::_ready(){
     this->mech_movement_module_ptr = this->get_node<Mech_Movement>("mech_root");
 
-    if(this->mech_movement_module_ptr)
+    if(this->mech_movement_module_ptr){
         godot::UtilityFunctions::print("mech module loaded by player interface");
+
+        //passing the player bullet mask and layer info
+        uint32_t layer = PROJECTILE_LAYER;
+        uint32_t mask = WALL_LAYER | ENEMY_LAYER;
+        this->mech_movement_module_ptr->pass_down_projectile_mask_and_layer(layer, mask);
+
+        this->mech_movement_module_ptr->set_collision_layer(PLAYER_LAYER);
+        this->mech_movement_module_ptr->set_collision_mask(WALL_LAYER | ENEMY_LAYER);
+    }
     else
         godot::UtilityFunctions::print("mech module NOT loaded by player interface");
 }

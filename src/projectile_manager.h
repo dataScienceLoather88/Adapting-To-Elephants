@@ -23,6 +23,9 @@ private:
 
     godot::Ref<godot::PackedScene> projectile_scene;
 
+    uint32_t collision_layer;
+    uint32_t collision_mask;
+
     
 
 protected:
@@ -32,6 +35,7 @@ public:
     projectile_manager();
     ~projectile_manager();
     void register_projectile(godot::Vector3 starting_position_vector, godot::Vector3 direction_vector, float starting_velocity);
+    void set_collision_layer_and_mask(uint32_t layer, uint32_t mask);
 
     void _process(double delta) override; 
     void _physics_process(double delta) override;   
