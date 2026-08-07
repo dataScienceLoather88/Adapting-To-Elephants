@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://cip3cy2t5ckj8" path="res://damage_registration_module.tscn" id="3_grf0i"]
 [ext_resource type="PackedScene" uid="uid://rij7fo7yxs7w" path="res://enemy.tscn" id="4_y3u0g"]
 
-[node name="level 2 root" type="Node3D" unique_id=2023207512]
+[node name="level 2 root" type="level_manager" unique_id=1669890230]
 
 [node name="arena_2_root" parent="." unique_id=1861480811 instance=ExtResource("1_7gsfu")]
 
