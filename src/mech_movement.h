@@ -89,4 +89,5 @@ public:
     void activate_activate_thrust();
     void activate_fire_light_weapon();
 
+    void pass_down_projectile_mask_and_layer(uint32_t layer, uint32_t mask);
 };

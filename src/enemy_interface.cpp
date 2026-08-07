@@ -1,5 +1,6 @@
 #include "enemy_interface.h"
 #include "mech_movement.h"
+#include "collision_layers_and_masks.h"
 
 #include <godot_cpp/variant/utility_functions.hpp>
 #include <godot_cpp/core/class_db.hpp>
@@ -35,8 +36,16 @@ void enemy_interface::_ready(){
     this->mech_movement_module_ptr = this->get_node<Mech_Movement>("mech_root");
     this->camera_ptr = this->get_node<godot::Camera3D>("mech_root/camera_pivot/SpringArm3D/Camera3D");
 
-    if(this->mech_movement_module_ptr)
+    if(this->mech_movement_module_ptr){
         godot::UtilityFunctions::print("mech module loaded by enemy interface");
+
+        uint32_t layer = PROJECTILE_LAYER;
+        uint32_t mask = WALL_LAYER | PLAYER_LAYER;
+        this->mech_movement_module_ptr->pass_down_projectile_mask_and_layer(layer, mask);
+
+        this->mech_movement_module_ptr->set_collision_layer(ENEMY_LAYER);
+        this->mech_movement_module_ptr->set_collision_mask(WALL_LAYER | PLAYER_LAYER);
+    }
     else
         godot::UtilityFunctions::print("mech module NOT loaded by enemy interface");
 

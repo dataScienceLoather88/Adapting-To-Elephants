@@ -297,3 +297,7 @@ void Mech_Movement::activate_move_mech_right() {this->move_mech_right = true;}
 void Mech_Movement::activate_move_mech_left() {this->move_mech_left = true;}
 void Mech_Movement::activate_activate_thrust() {this->activate_thrust = true;}
 void Mech_Movement::activate_fire_light_weapon() {this->fire_light_weapon = true;}
+
+void Mech_Movement::pass_down_projectile_mask_and_layer(uint32_t layer, uint32_t mask){
+    this->light_weapon_ptr->pass_down_projectile_mask_and_layer(layer, mask);
+}

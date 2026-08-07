@@ -48,3 +48,7 @@ void light_weapon::fire_request(godot::Transform3D camera_global_transform){
     this->camera_global_transform = camera_global_transform;
     this->fire_request_approved_flag = true;
 }
+
+void light_weapon::pass_down_projectile_mask_and_layer(uint32_t layer, uint32_t mask){
+    this->projectile_manager_ptr->set_collision_layer_and_mask(layer, mask);
+}

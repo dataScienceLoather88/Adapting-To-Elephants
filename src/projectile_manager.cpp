@@ -88,6 +88,9 @@ void projectile_manager::register_projectile(godot::Vector3 starting_position_ve
         return;
     }
 
+    this->projectile_array[this->projectile_iterator]->set_collision_layer(this->collision_layer);
+    this->projectile_array[this->projectile_iterator]->set_collision_mask(this->collision_mask);
+
     this->projectile_data_array[this->projectile_iterator].starting_position_vector = starting_position_vector;
     this->projectile_data_array[this->projectile_iterator].direction_vector = direction_vector;
     this->projectile_data_array[this->projectile_iterator].starting_velocity = starting_velocity;
@@ -98,4 +101,9 @@ void projectile_manager::register_projectile(godot::Vector3 starting_position_ve
 
     this->projectile_iterator = (this->projectile_iterator + 1) % this->projectile_limit;
     this->projectile_count += 1;
+}
+
+void projectile_manager::set_collision_layer_and_mask(uint32_t layer, uint32_t mask){
+    this->collision_layer = layer;
+    this->collision_mask = mask;
 }
