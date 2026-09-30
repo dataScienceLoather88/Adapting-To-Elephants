@@ -10,7 +10,10 @@
 enemy_interface::enemy_interface(){}
 enemy_interface::~enemy_interface(){}
 
-void enemy_interface::_bind_methods(){}
+void enemy_interface::_bind_methods(){
+    godot::ClassDB::bind_method(godot::D_METHOD("receive_player_radar_ping", "position"), &enemy_interface::receive_player_radar_ping);
+
+}
 
 void enemy_interface::_process(double delta){}
 
@@ -55,4 +58,10 @@ void enemy_interface::_ready(){
     }
     else
         godot::UtilityFunctions::print("camera node NOT loaded by enemy interface");
+}
+
+void enemy_interface::receive_player_radar_ping(godot::Vector3 position){
+    this->player_position = position;
+    godot::UtilityFunctions::print("player position update on enemy radar:");
+    godot::UtilityFunctions::print(this->player_position);
 }

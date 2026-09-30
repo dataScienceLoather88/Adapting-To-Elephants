@@ -8,6 +8,7 @@ class player_interface: public godot::Node3D{
     GDCLASS(player_interface, godot::Node3D);
 private:
     Mech_Movement *mech_movement_module_ptr;
+    double radar_ping_timer = 0.0f;
 protected:
     static void _bind_methods();
 public:

@@ -60,4 +60,18 @@ void damage_registration_module::receive_player_and_enemy_ptrs(godot::TypedArray
         }
 
     }
+
+    //setting up radar signals for the enemy entities
+    for(int i = 0; i < this->player_ptr_array.size(); i++){
+        godot::Node *player_ptr = godot::Object::cast_to<godot::Node>(this->player_ptr_array[i]);
+        if(!player_ptr)
+            continue;
+
+        for(int j = 0; j < this->enemy_ptr_array.size(); j++){
+            godot::Node *enemy_ptr = godot::Object::cast_to<godot::Node>(this->enemy_ptr_array[j]);
+            if(!enemy_ptr)
+                continue;
+            player_ptr->connect("send_player_radar_ping", godot::Callable(enemy_ptr, "receive_player_radar_ping"));
+        }
+    }
 }
