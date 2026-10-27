@@ -61,7 +61,48 @@ void enemy_interface::_ready(){
 }
 
 void enemy_interface::receive_player_radar_ping(godot::Vector3 position){
+    
+    godot::Vector3 self_position = this->mech_movement_module_ptr->get_global_position();
+
+    //euclidean dist from self to player
+    this->euc_dist_to_player = self_position.distance_to(position);
+
+    //vertical angle diff from self to player (will be used 2 tell whether the enemy is approaching from above or below)
+    {
+        godot::Vector2 xz_projection_player = godot::Vector2(position.x, position.z);
+        godot::Vector2 xz_projection_self = godot::Vector2(self_position.x, self_position.z);
+        double base = xz_projection_player.distance_to(xz_projection_self);
+        double hyp = self_position.distance_to(position);
+        this->vertical_angle_diff_body = godot::Math::rad_to_deg(godot::Math::acos(base/hyp));
+    }
+
+    //calculating the uhhh orientation differences for aiming
+    {
+        godot::Vector3 vec_enemy_to_player = position - self_position;
+        godot::Vector3 vec_camera_forward = this->camera_ptr->get_global_transform().basis.get_column(2);
+
+        godot::Vector2 xz_E2P = godot::Vector2(vec_enemy_to_player.x, vec_enemy_to_player.z);
+        godot::Vector2 xz_CF = godot::Vector2(vec_camera_forward.x, vec_camera_forward.z);
+        this->horizontal_angle_diff_camera = godot::Math::acos((xz_E2P.dot(xz_CF))/((xz_E2P.length() * xz_CF.length()) + 0.000001f));
+        this->horizontal_angle_diff_camera = godot::Math::rad_to_deg(this->horizontal_angle_diff_camera);
+
+        godot::Vector2 xy_E2P = godot::Vector2(godot::Math::abs(vec_enemy_to_player.x), vec_enemy_to_player.y);
+        godot::Vector2 xy_CF = godot::Vector2(godot::Math::abs(vec_camera_forward.x), vec_camera_forward.y);
+        this->vertical_angle_diff_camera = godot::Math::acos((xy_E2P.dot(xy_CF))/(xy_E2P.length() * xy_CF.length()));
+        this->vertical_angle_diff_camera = godot::Math::rad_to_deg(this->vertical_angle_diff_camera);
+    }
+
+    this->player_movement_vector = position - this->player_position;
+
+    //update player position at the end after calculations
     this->player_position = position;
+
     godot::UtilityFunctions::print("player position update on enemy radar:");
     godot::UtilityFunctions::print(this->player_position);
+    godot::UtilityFunctions::print(this->euc_dist_to_player);
+    godot::UtilityFunctions::print(this->vertical_angle_diff_body);
+    godot::UtilityFunctions::print(this->horizontal_angle_diff_camera);
+    godot::UtilityFunctions::print(this->vertical_angle_diff_camera);
+    godot::UtilityFunctions::print(this->player_movement_vector);
+    
 }
