@@ -12,7 +12,9 @@
 player_interface::player_interface(){}
 player_interface::~player_interface(){}
 
-void player_interface::_bind_methods(){}
+void player_interface::_bind_methods(){
+    ADD_SIGNAL(godot::MethodInfo("send_player_radar_ping", godot::PropertyInfo(godot::Variant::VECTOR3, "position")));
+}
 
 void player_interface::_process(double delta){}
 void player_interface::_physics_process(double delta){
@@ -33,6 +35,13 @@ void player_interface::_physics_process(double delta){
     if(input->is_action_pressed("move_mech_left")){this->mech_movement_module_ptr->activate_move_mech_left();}
     if(input->is_action_pressed("activate_thrust")){this->mech_movement_module_ptr->activate_activate_thrust();}
     if(input->is_action_pressed("fire_light_weapon")){this->mech_movement_module_ptr->activate_fire_light_weapon();}
+
+    this->radar_ping_timer += delta;
+    if(this->radar_ping_timer >= 1.0f){
+        //godot::UtilityFunctions::print("signal emmision test");
+        this->emit_signal("send_player_radar_ping", this->mech_movement_module_ptr->get_global_position());
+        this->radar_ping_timer = 0.0f;
+    }
 }
 
 void player_interface::_ready(){

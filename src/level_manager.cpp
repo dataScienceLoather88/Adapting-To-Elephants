@@ -1,9 +1,6 @@
 #include "level_manager.h"
 #include "damage_registration_module.h"
 
-class player_interface;
-class enemy_interface;
-
 void level_manager::_bind_methods() {}
 
 level_manager::level_manager() {}
