@@ -79,17 +79,27 @@ void enemy_interface::receive_player_radar_ping(godot::Vector3 position){
     //calculating the uhhh orientation differences for aiming
     {
         godot::Vector3 vec_enemy_to_player = position - self_position;
-        godot::Vector3 vec_camera_forward = this->camera_ptr->get_global_transform().basis.get_column(2);
+        godot::Vector3 vec_camera_forward = -1 * this->camera_ptr->get_global_transform().basis.get_column(2);
 
         godot::Vector2 xz_E2P = godot::Vector2(vec_enemy_to_player.x, vec_enemy_to_player.z);
         godot::Vector2 xz_CF = godot::Vector2(vec_camera_forward.x, vec_camera_forward.z);
         this->horizontal_angle_diff_camera = godot::Math::acos((xz_E2P.dot(xz_CF))/((xz_E2P.length() * xz_CF.length()) + 0.000001f));
         this->horizontal_angle_diff_camera = godot::Math::rad_to_deg(this->horizontal_angle_diff_camera);
+        if(xz_E2P.x < 0.0f){this->horizontal_angle_diff_camera *= -1;}
 
-        godot::Vector2 xy_E2P = godot::Vector2(godot::Math::abs(vec_enemy_to_player.x), vec_enemy_to_player.y);
-        godot::Vector2 xy_CF = godot::Vector2(godot::Math::abs(vec_camera_forward.x), vec_camera_forward.y);
-        this->vertical_angle_diff_camera = godot::Math::acos((xy_E2P.dot(xy_CF))/(xy_E2P.length() * xy_CF.length()));
+        godot::Vector2 zy_E2P = godot::Vector2(godot::Math::abs(vec_enemy_to_player.z), vec_enemy_to_player.y);
+        godot::Vector2 zy_CF = godot::Vector2(godot::Math::abs(vec_camera_forward.z), vec_camera_forward.y);
+        this->vertical_angle_diff_camera = godot::Math::acos((zy_E2P.dot(zy_CF))/(zy_E2P.length() * zy_CF.length()));
         this->vertical_angle_diff_camera = godot::Math::rad_to_deg(this->vertical_angle_diff_camera);
+        if(zy_E2P.y < 0.0f){this->vertical_angle_diff_camera *= -1;}
+
+        /*
+        godot::UtilityFunctions::print("vert camera diff debug");
+        godot::UtilityFunctions::print(vec_enemy_to_player);
+        godot::UtilityFunctions::print(zy_E2P);
+        godot::UtilityFunctions::print(vec_camera_forward);
+        godot::UtilityFunctions::print(zy_CF);
+        */
     }
 
     this->player_movement_vector = position - this->player_position;
