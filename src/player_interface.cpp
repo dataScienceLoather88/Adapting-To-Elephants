@@ -37,7 +37,7 @@ void player_interface::_physics_process(double delta){
     if(input->is_action_pressed("fire_light_weapon")){this->mech_movement_module_ptr->activate_fire_light_weapon();}
 
     this->radar_ping_timer += delta;
-    if(this->radar_ping_timer >= 1.0f){
+    if(this->radar_ping_timer >= 1.0f/2.0f){
         //godot::UtilityFunctions::print("signal emmision test");
         this->emit_signal("send_player_radar_ping", this->mech_movement_module_ptr->get_global_position());
         this->radar_ping_timer = 0.0f;

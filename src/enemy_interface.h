@@ -19,6 +19,12 @@ private:
     double vertical_angle_diff_camera = 0.0f;
     godot::Vector3 player_movement_vector = godot::Vector3(0,0,0);
 
+    //boolean movement triggers
+    bool bool_rotate_mech_right = false;
+    bool bool_rotate_mech_left = false;
+    bool bool_activate_look_up = false;
+    bool bool_activate_look_down = false;
+
 protected:
     static void _bind_methods();
 public:
